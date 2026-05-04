@@ -1,23 +1,30 @@
-module "databases" {
-  for_each = var.databases
-  source   = "./modules/rds"
+# module "databases" {
+#   for_each = var.databases
+#   source   = "./modules/rds"
 
-  env               = var.env
-  subnet_ids        = var.subnets
-  kms_key_id        = var.kms_key_id
+#   env               = var.env
+#   subnet_ids        = var.subnets
+#   kms_key_id        = var.kms_key_id
   
-  allocated_storage = each.value["allocated_storage"]
+#   allocated_storage = each.value["allocated_storage"]
 
-}
+# }
 
-module "eks" {
+# module "eks" {
   
-  source = "./modules/eks"
+#   source = "./modules/eks"
 
-  env        = var.env
-  subnet_ids  = var.subnets
-  kms_key_id  = var.kms_key_id
-}
+#   env        = var.env
+#   subnet_ids  = var.subnets
+#   kms_key_id  = var.kms_key_id
+# }
+
+module "network" {
+  source         = "./modules/network"
+  for_each       = var.network
+  env            = var.env
+  vpc_cidr       = each.value["vpc_cidr"]
+} 
 
 # module "apps" {
 #   depends_on = [module.databases]

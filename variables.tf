@@ -19,3 +19,10 @@ variable "vpc_id" {
 variable "kms_key_id" {
 
 }
+
+variable "network" {
+
+}
+variable "vpc_cidr" {
+
+}
