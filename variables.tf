@@ -23,6 +23,3 @@ variable "kms_key_id" {
 variable "network" {
 
 }
-variable "vpc_cidr" {
-
-}

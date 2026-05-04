@@ -20,8 +20,9 @@
 # }
 
 module "network" {
-  source         = "./modules/network"
   for_each       = var.network
+  source         = "./modules/network"
+  
   env            = var.env
   vpc_cidr       = each.value["vpc_cidr"]
 } 
