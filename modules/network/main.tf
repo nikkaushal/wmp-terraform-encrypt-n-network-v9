@@ -4,3 +4,14 @@ resource aws_vpc "main" {
         Name = var.env
     }
 }
+
+resource "aws_subnet" "name" {
+  for_each = var.subnets
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = each.value["cidr"]
+  availability_zone = each.value["az"]
+  tags = {
+    Name = each.key
+  }
+  
+}

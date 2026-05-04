@@ -82,7 +82,7 @@ network = {
         az = "us-east-1a"
       }
       s2 = {
-        cidr = "10.1.128.0/25"
+        cidr = "10.1.0.128/25"
         az = "us-east-1b"
       }
   }
