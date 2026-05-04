@@ -15,3 +15,13 @@ resource "aws_subnet" "name" {
   }
   
 }
+
+resource "aws_vpc_peering_connection" "main" {
+  vpc_id        = var.default_vpc_id
+  peer_vpc_id   = aws_vpc.main.id
+  auto_accept = true 
+  tags = {
+    Name = "default-to-${var.env}"
+  }
+  
+}

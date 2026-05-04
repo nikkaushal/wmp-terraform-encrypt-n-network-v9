@@ -26,6 +26,7 @@ module "network" {
   env            = var.env
   vpc_cidr       = each.value["vpc_cidr"]
   subnets = each.value["subnets"]
+  default_vpc_id = var.vpc_id
 } 
 
 # module "apps" {

@@ -88,3 +88,5 @@ network = {
   }
 }
 }
+
+default_vpc_id = "vpc-82bd6eff"
