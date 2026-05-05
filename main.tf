@@ -11,14 +11,14 @@ module "databases" {
   vpc_id            = module.network["dev"].vpc_id["id"]
 }
 
-# module "eks" {
+module "eks" {
   
-#   source = "./modules/eks"
+  source = "./modules/eks"
 
-#   env        = var.env
-#   subnet_ids        = module.network["dev"].subnet_ids
-#   kms_key_id  = var.kms_key_id
-# }
+  env        = var.env
+  subnet_ids        = module.network["dev"].subnet_ids
+  kms_key_id  = var.kms_key_id
+}
 
 module "network" {
   for_each       = var.network
