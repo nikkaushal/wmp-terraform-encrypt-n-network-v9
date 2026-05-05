@@ -8,7 +8,7 @@ module "databases" {
   
   allocated_storage = each.value["allocated_storage"]
   subnet_ids        = module.network["dev"].subnet_ids
-  vpc_id            = module.network["dev"].vpc_id.["id"]
+  vpc_id            = module.network["dev"].vpc_id["id"]
 }
 
 # module "eks" {
