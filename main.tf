@@ -27,6 +27,8 @@ module "network" {
   vpc_cidr       = each.value["vpc_cidr"]
   subnets = each.value["subnets"]
   default_vpc_id = var.vpc_id
+  default_route_table_id = var.default_route_table_id
+  default_vpc_cidr = var.default_vpc_cidr
 } 
 
 # module "apps" {
