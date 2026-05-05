@@ -22,6 +22,14 @@ resource "aws_eks_cluster" "main" {
   depends_on = [aws_iam_role_policy_attachment.cluster_AmazonEKSClusterPolicy]
 }
 
+resource "aws_vpc_security_group_ingress_rule" "add-https-to-bastion" {
+  security_group_id = aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
+  cidr_ipv4         = "172.31.0.0/16"
+  from_port         = 443
+  ip_protocol       = "tcp"
+  to_port           = 443
+}
+
 resource "aws_iam_role" "cluster" {
   name = "eks-cluster-${var.env}"
   assume_role_policy = jsonencode({

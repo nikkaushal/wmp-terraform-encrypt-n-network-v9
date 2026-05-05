@@ -32,3 +32,6 @@ variable "default_vpc_cidr" {
 variable "default_vpc_rt_id" {
   
 }
+variable "cluster_sg_ingress_cidr" {
+  
+}

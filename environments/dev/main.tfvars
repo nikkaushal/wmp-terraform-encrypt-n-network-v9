@@ -92,3 +92,4 @@ network = {
 default_vpc_id = "vpc-82bd6eff"
 default_vpc_rt_id = "rtb-2fe5ba51"
 default_vpc_cidr = "172.31.0.0/16"
+cluster_sg_ingress_cidr = ["172.31.0.0/16","10.1.0.0/24"]

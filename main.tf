@@ -16,8 +16,12 @@ module "eks" {
   source = "./modules/eks"
 
   env        = var.env
-  subnet_ids        = module.network["dev"].subnet_ids
   kms_key_id  = var.kms_key_id
+  cluster_sg_ingress_cidr = var.cluster_sg_ingress_cidr
+  
+  subnet_ids        = module.network["dev"].subnet_ids
+  vpc_id            = module.network["dev"].vpc_id["id"]
+
 }
 
 module "network" {
