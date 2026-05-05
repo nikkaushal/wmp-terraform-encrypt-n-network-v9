@@ -21,7 +21,7 @@ resource "aws_db_subnet_group" "main" {
 }
 
 resource "aws_security_group" "main" {
-
+  vapc_id = var.vpc_id
   name = "wmp-rds-${var.env}"
 
   ingress {
