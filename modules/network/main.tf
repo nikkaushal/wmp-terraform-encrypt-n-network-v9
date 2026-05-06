@@ -51,6 +51,14 @@ resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.ngw[each.key].id
   subnet_id     = aws_subnet.main[each.key].id
 }
+
+# NGW routes - only for private subnets (ngw = true)
+resource "aws_route" "ngw-route" {
+  for_each               = local.ngw_subnets
+  route_table_id         = aws_route_table.main[each.key].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.ngw[each.key].id
+}
 # resource "aws_vpc_peering_connection" "main" {
 #   vpc_id        = var.default_vpc_id
 #   peer_vpc_id   = aws_vpc.main.id
