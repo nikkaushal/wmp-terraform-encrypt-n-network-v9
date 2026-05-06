@@ -12,17 +12,17 @@ locals {
     subnet_name => subnet_config
     if subnet_config.ngw == true
   }
-#     public_subnets = {
-#     for subnet_name, subnet_config in var.subnets :
-#     subnet_name => subnet_config
-#     if subnet_config.group == "public"
-#   }
+    public_subnets = {
+    for subnet_name, subnet_config in var.subnets :
+    subnet_name => subnet_config
+    if subnet_config.group == "public"
+  }
 
-#   app_subnets = {
-#     for subnet_name, subnet_config in var.subnets :
-#     subnet_name => subnet_config
-#     if subnet_config.group == "app"
-#   }
+  app_subnets = {
+    for subnet_name, subnet_config in var.subnets :
+    subnet_name => subnet_config
+    if subnet_config.group == "app"
+  }
 
   db_subnets = {
     for subnet_name, subnet_config in var.subnets :
