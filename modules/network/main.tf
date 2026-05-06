@@ -33,6 +33,13 @@ resource "aws_route_table_association" "main" {
   subnet_id      = aws_subnet.main[each.key].id
   route_table_id = aws_route_table.main[each.key].id
 }
+# IGW routes - only for public subnets (igw = true)
+resource "aws_route" "igw-route" {
+  for_each               = local.igw_subnets
+  route_table_id         = aws_route_table.main[each.key].id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.gw.id
+}
 # resource "aws_vpc_peering_connection" "main" {
 #   vpc_id        = var.default_vpc_id
 #   peer_vpc_id   = aws_vpc.main.id
