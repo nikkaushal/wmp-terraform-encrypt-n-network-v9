@@ -15,7 +15,19 @@ resource "aws_subnet" "main" {
   }
   
 }
-
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Name = var.env
+  }
+}
+resource "aws_route_table" "main" {
+  for_each = var.subnets
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Name = var.env
+  }
+}
 # resource "aws_vpc_peering_connection" "main" {
 #   vpc_id        = var.default_vpc_id
 #   peer_vpc_id   = aws_vpc.main.id
