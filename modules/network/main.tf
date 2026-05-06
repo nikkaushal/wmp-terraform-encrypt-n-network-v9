@@ -28,6 +28,11 @@ resource "aws_route_table" "main" {
     Name = var.env
   }
 }
+resource "aws_route_table_association" "main" {
+  for_each = var.subnets
+  subnet_id      = aws_subnet.main[each.key].id
+  route_table_id = aws_route_table.main[each.key].id
+}
 # resource "aws_vpc_peering_connection" "main" {
 #   vpc_id        = var.default_vpc_id
 #   peer_vpc_id   = aws_vpc.main.id
