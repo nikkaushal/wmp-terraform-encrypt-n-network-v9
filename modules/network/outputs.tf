@@ -28,9 +28,9 @@ output "debug_ngw_subnets" {
 #   }
 # }
 
-# output "db_subnet_ids" {
-#   value = {
-#     for k, v in local.db_subnets :
-#     k => aws_subnet.main[k].id
-#   }
-# }
+output "db_subnet_ids" {
+  value = {
+    for k, v in local.db_subnets :
+    k => aws_subnet.main[k].id
+  }
+}
