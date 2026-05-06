@@ -1,28 +1,28 @@
-module "databases" {
-  for_each = var.databases
-  source   = "./modules/rds"
+# module "databases" {
+#   for_each = var.databases
+#   source   = "./modules/rds"
 
-  env               = var.env
-  kms_key_id        = var.kms_key_id
+#   env               = var.env
+#   kms_key_id        = var.kms_key_id
 
   
-  allocated_storage = each.value["allocated_storage"]
-  subnet_ids        = module.network["dev"].subnet_ids
-  vpc_id            = module.network["dev"].vpc_id["id"]
-}
+#   allocated_storage = each.value["allocated_storage"]
+#   subnet_ids        = module.network["dev"].subnet_ids
+#   vpc_id            = module.network["dev"].vpc_id["id"]
+# }
 
-module "eks" {
+# module "eks" {
   
-  source = "./modules/eks"
+#   source = "./modules/eks"
 
-  env        = var.env
-  kms_key_id  = var.kms_key_id
-  cluster_sg_ingress_cidr = var.cluster_sg_ingress_cidr
-  
-  subnet_ids        = module.network["dev"].subnet_ids
-  vpc_id            = module.network["dev"].vpc_id["id"]
+#   env        = var.env
+#   kms_key_id  = var.kms_key_id
+#   cluster_sg_ingress_cidr = var.cluster_sg_ingress_cidr
 
-}
+#   subnet_ids        = module.network["dev"].subnet_ids
+#   vpc_id            = module.network["dev"].vpc_id["id"]
+
+# }
 
 module "network" {
   for_each       = var.network
