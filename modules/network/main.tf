@@ -58,7 +58,7 @@ resource "aws_route" "ngw-route" {
   route_table_id         = aws_route_table.main[each.key].id
   destination_cidr_block = "0.0.0.0/0"
   # Look up NAT GW by matching AZ of the app subnet to AZ of the public subnet
-  nat_gateway_id         =  aws_nat_gateway.main[each.key].id
+  nat_gateway_id         =  aws_nat_gateway.ngw[each.key].id
 }
 # resource "aws_vpc_peering_connection" "main" {
 #   vpc_id        = var.default_vpc_id
