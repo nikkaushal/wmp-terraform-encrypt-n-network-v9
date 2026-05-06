@@ -60,23 +60,25 @@ resource "aws_route" "ngw-route" {
   # Look up NAT GW by matching AZ of the app subnet to AZ of the public subnet
   nat_gateway_id         =  aws_nat_gateway.ngw[each.key].id
 }
-# resource "aws_vpc_peering_connection" "main" {
-#   vpc_id        = var.default_vpc_id
-#   peer_vpc_id   = aws_vpc.main.id
-#   auto_accept = true 
-#   tags = {
-#     Name = "default-to-${var.env}"
-#   }
+resource "aws_vpc_peering_connection" "main" {
+  vpc_id        = var.default_vpc_id
+  peer_vpc_id   = aws_vpc.main.id
+  auto_accept = true 
+  tags = {
+    Name = "default-to-${var.env}"
+  }
   
-# }
+}
 
-# resource "aws_route" "default-rt-add-peering" {
-#   route_table_id         = var.default_vpc_rt_id
-#   destination_cidr_block = var.vpc_cidr
-#   vpc_peering_connection_id = aws_vpc_peering_connection.main.id
-# }
-# resource "aws_route" "here-vpc-rt-add-peering" {
-#   route_table_id         = aws_vpc.main.default_route_table_id
-#   destination_cidr_block = var.default_vpc_cidr
-#   vpc_peering_connection_id = aws_vpc_peering_connection.main.id
-# }
+resource "aws_route" "default-rt-add-peering" {
+  route_table_id         = var.default_vpc_rt_id
+  destination_cidr_block = var.vpc_cidr
+  vpc_peering_connection_id = aws_vpc_peering_connection.main.id
+}
+# Add peering route to ALL route tables in new VPC
+resource "aws_route" "here-vpc-rt-add-peering" {
+  for_each                  = aws_route_table.main
+  route_table_id            = aws_route_table.main[each.key].id
+  destination_cidr_block    = var.default_vpc_cidr
+  vpc_peering_connection_id = aws_vpc_peering_connection.main.id
+}
