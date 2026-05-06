@@ -82,7 +82,7 @@ network = {
         az = "us-east-1a"
         igw = true
         ngw = false
-        grtoup = "public"
+        group = "public"
       }
       public-subnet2 = {
         cidr = "10.1.0.32/27"
