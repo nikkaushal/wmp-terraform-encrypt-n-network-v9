@@ -40,6 +40,17 @@ resource "aws_route" "igw-route" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.gw.id
 }
+# NAT Gateway EIP - one per igw subnet AZ
+resource "aws_eip" "ngw" {
+  for_each = local.igw_subnets
+  domain   = "vpc"
+}
+# NAT Gateway - one per ngw subnet
+resource "aws_nat_gateway" "ngw" {
+  for_each      = local.igw_subnets
+  allocation_id = aws_eip.igw[each.key].id
+  subnet_id     = aws_subnet.main[each.key].id
+}
 # resource "aws_vpc_peering_connection" "main" {
 #   vpc_id        = var.default_vpc_id
 #   peer_vpc_id   = aws_vpc.main.id
