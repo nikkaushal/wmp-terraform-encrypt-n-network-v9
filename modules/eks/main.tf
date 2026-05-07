@@ -95,28 +95,28 @@ resource "aws_launch_template" "main" {
 
 }
 
-# resource "aws_eks_node_group" "main" {
-#   cluster_name    = aws_eks_cluster.main.name
-#   node_group_name = "${var.env}-ng"
-#   node_role_arn   = aws_iam_role.node.arn
-#   subnet_ids = var.subnet_ids
-#   instance_types  = ["t3.xlarge"]
-#   capacity_type   = "SPOT"
-#   launch_template {
-#     id      = aws_launch_template.main.id
-#     version = "$Latest"
-#   }
+resource "aws_eks_node_group" "main" {
+  cluster_name    = aws_eks_cluster.main.name
+  node_group_name = "${var.env}-ng"
+  node_role_arn   = aws_iam_role.node.arn
+  subnet_ids = var.subnet_ids
+  instance_types  = ["t3.xlarge"]
+  capacity_type   = "SPOT"
+  launch_template {
+    id      = aws_launch_template.main.id
+    version = "$Latest"
+  }
 
-#   scaling_config {
-#     desired_size = 1
-#     max_size     = 2
-#     min_size     = 1
-#   }
+  scaling_config {
+    desired_size = 1
+    max_size     = 2
+    min_size     = 1
+  }
 
-#   depends_on = [
-#     aws_iam_role_policy_attachment.main-AmazonEKSWorkerNodePolicy,
-#     aws_iam_role_policy_attachment.main-AmazonEKS_CNI_Policy,
-#     aws_iam_role_policy_attachment.main-AmazonEC2ContainerRegistryReadOnly,
-#     aws_launch_template.main
-#   ]
-# }
+  depends_on = [
+    aws_iam_role_policy_attachment.main-AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.main-AmazonEKS_CNI_Policy,
+    aws_iam_role_policy_attachment.main-AmazonEC2ContainerRegistryReadOnly,
+    aws_launch_template.main
+  ]
+}
