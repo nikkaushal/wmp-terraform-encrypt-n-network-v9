@@ -41,17 +41,26 @@ resource "aws_route" "igw-route" {
   gateway_id             = aws_internet_gateway.gw.id
 }
 # NAT Gateway EIP - one per igw subnet AZ
+# resource "aws_eip" "ngw" {
+#   for_each = local.ngw_subnets
+#   domain   = "vpc"
+# }
 resource "aws_eip" "ngw" {
-  for_each = local.ngw_subnets
+  for_each = local.igw_subnets    # ← public subnets
   domain   = "vpc"
 }
 # NAT Gateway - one per ngw subnet
+# resource "aws_nat_gateway" "ngw" {
+#   for_each      = local.ngw_subnets
+#   allocation_id = aws_eip.ngw[each.key].id
+#   subnet_id     = aws_subnet.main[each.key].id
+# }
 resource "aws_nat_gateway" "ngw" {
-  for_each      = local.ngw_subnets
+  for_each      = local.igw_subnets    # ← public subnets
   allocation_id = aws_eip.ngw[each.key].id
   subnet_id     = aws_subnet.main[each.key].id
+  depends_on = [aws_internet_gateway.gw]
 }
-
 # NGW routes - only for private subnets (ngw = true)
 resource "aws_route" "ngw-route" {
   for_each               = local.ngw_subnets
