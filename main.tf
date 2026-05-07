@@ -20,7 +20,7 @@ module "databases" {
 #   kms_key_id  = var.kms_key_id
 #   cluster_sg_ingress_cidr = var.cluster_sg_ingress_cidr
 
-#   subnet_ids        = module.network["dev"].subnet_ids
+#   subnet_ids        = values(module.network["dev"].app_subnet_ids)
 #   vpc_id            = module.network["dev"].vpc_id["id"]
 
 # }
