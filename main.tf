@@ -12,18 +12,18 @@ module "databases" {
   vpc_id            = module.network["dev"].vpc_id["id"]
 }
 
-# module "eks" {
+module "eks" {
   
-#   source = "./modules/eks"
+  source = "./modules/eks"
 
-#   env        = var.env
-#   kms_key_id  = var.kms_key_id
-#   cluster_sg_ingress_cidr = var.cluster_sg_ingress_cidr
+  env        = var.env
+  kms_key_id  = var.kms_key_id
+  cluster_sg_ingress_cidr = var.cluster_sg_ingress_cidr
 
-#   subnet_ids        = values(module.network["dev"].app_subnet_ids)
-#   vpc_id            = module.network["dev"].vpc_id["id"]
+  subnet_ids        = values(module.network["dev"].app_subnet_ids)
+  vpc_id            = module.network["dev"].vpc_id["id"]
 
-# }
+}
 
 module "network" {
   for_each       = var.network
