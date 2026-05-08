@@ -9,11 +9,11 @@
     
 # }
 
-# provider "helm" {
-#   kubernetes = {
-#     config_path = "~/.kube/config"
-#   }
-# }
+provider "helm" {
+  kubernetes = {
+    config_path = "~/.kube/config"
+  }
+}
 
 # resource "helm_release" "argocd" {
 #     depends_on = [ null_resource.kube-config ]
