@@ -56,3 +56,21 @@ resource "helm_release" "file-beat" {
     file("${path.module}/filebeat.yml")
   ]
 }
+
+resource "helm_release" "traefik" {
+
+  depends_on = [null_resource.kube-config]
+
+  name       = "traefik"
+  repository = "https://traefik.github.io/charts"
+  chart      = "traefik"
+
+}
+
+resource "helm_release" "external-dns" {
+  depends_on       = [null_resource.kube-config]
+  name             = "external-dns"
+  repository       = "https://kubernetes-sigs.github.io/external-dns"
+  chart            = "external-dns"
+  create_namespace = true
+}
