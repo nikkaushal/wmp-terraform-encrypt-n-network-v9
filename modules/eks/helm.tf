@@ -16,7 +16,7 @@ provider "helm" {
 }
 
 resource "helm_release" "argocd" {
-    depends_on = [ null_resource.kube-config ]
+    depends_on = [ null_resource.kube-config, helm_release.traefik]
     name       = "argocd"
     repository = "https://argoproj.github.io/argo-helm"
     chart      = "argo-cd"
@@ -31,7 +31,7 @@ resource "helm_release" "argocd" {
 
 resource "helm_release" "kube-stack" {
 
-  depends_on = [null_resource.kube-config]
+  depends_on = [null_resource.kube-config, helm_release.traefik]
 
   name       = "kubestack"
   repository = "https://prometheus-community.github.io/helm-charts"
@@ -68,7 +68,7 @@ resource "helm_release" "traefik" {
 }
 
 resource "helm_release" "external-dns" {
-  depends_on       = [null_resource.kube-config]
+  depends_on       = [null_resource.kube-config, helm_release.traefik]
   name             = "external-dns"
   repository       = "https://kubernetes-sigs.github.io/external-dns"
   chart            = "external-dns"
