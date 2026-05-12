@@ -29,20 +29,31 @@ resource "helm_release" "argocd" {
     ]
 }    
 
-# resource "helm_release" "kube-stack" {
+resource "helm_release" "prometheus-stack" {
 
-#   depends_on = [null_resource.kube-config, helm_release.traefik]
+  depends_on = [null_resource.kube-config, helm_release.traefik]
 
-#   name       = "kubestack"
-#   repository = "https://prometheus-community.github.io/helm-charts"
-#   chart      = "kube-prometheus-stack"
-#   set = [
-#     {
-#       name  = "prometheus.service.type"
-#       value = "LoadBalancer"
-#     }
-#   ]
-# }
+  name       = "kubestack"
+  repository = "https://prometheus-community.github.io/helm-charts"
+  chart      = "kube-prometheus-stack"
+  set = [
+    {
+      name  = "prometheus.ingress.enabled"
+      value = "true"
+    },
+    {
+      name  = "prometheus.ingress.ingressClassName"
+      value = "traefik"
+    }
+  ]
+  set_list = [
+    {
+      name  = "prometheus.ingress.hosts"
+      value = ["prometheus-${var.env}.tek-nik.com"]
+    }
+  ]
+}
+
 
 resource "helm_release" "file-beat" {
 
