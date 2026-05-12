@@ -46,3 +46,10 @@ resource "aws_iam_role" "external-dns-role" {
     })
   }
 }
+
+resource "aws_eks_pod_identity_association" "external-dns-pod-association" {
+    cluster_name = aws_eks_cluster.main.name
+    role_arn    = aws_iam_role.external-dns-role.arn
+    namespace   = "default"
+    service_account = "external-dns"
+}
