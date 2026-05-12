@@ -1,0 +1,13 @@
+ports:
+  web:
+    http:
+      redirectTo:
+        port: websecure
+        scheme: https
+        permanent: true
+
+service:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-1:293222827824:certificate/9a14b239-9298-45a6-ab49-9a61b9e675a7"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
