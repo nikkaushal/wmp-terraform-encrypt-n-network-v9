@@ -69,18 +69,18 @@ resource "helm_release" "prometheus-stack" {
 }
 
 
-resource "helm_release" "file-beat" {
+# resource "helm_release" "file-beat" {
 
-  depends_on = [null_resource.kube-config]
+#   depends_on = [null_resource.kube-config]
 
-  name       = "filebeat"
-  repository = "https://helm.elastic.co"
-  chart      = "filebeat"
+#   name       = "filebeat"
+#   repository = "https://helm.elastic.co"
+#   chart      = "filebeat"
 
-  values = [
-    file("${path.module}/filebeat.yml")
-  ]
-}
+#   values = [
+#     file("${path.module}/filebeat.yml")
+#   ]
+# }
 
 resource "helm_release" "traefik" {
 
