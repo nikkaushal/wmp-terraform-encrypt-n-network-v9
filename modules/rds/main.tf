@@ -51,8 +51,8 @@ resource "aws_db_instance" "main" {
   engine                 = "postgres"
   engine_version         = "16.13"
   instance_class         = "db.t3.micro"
-  username               = "wmpuser"
-  password               = "WmpUser#1234"
+  username               = data.aws_ssm_parameter.rds_username.value
+  password               = data.aws_ssm_parameter.rds_password.value
   parameter_group_name   = aws_db_parameter_group.main.name
   skip_final_snapshot    = true
   db_subnet_group_name   = aws_db_subnet_group.main.name
@@ -66,7 +66,7 @@ resource "null_resource" "schema_load" {
     command = <<EOF
 sudo dnf install -y postgresql16
 curl -o global-bundle.pem https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
-PGPASSWORD='WmpUser#1234' /usr/pgsql-16/bin/psql  'host=${aws_db_instance.main.address} port=5432 dbname=default_dummy user=wmpuser sslmode=verify-full sslrootcert=./global-bundle.pem' <${path.module}/setup.sql
+PGPASSWORD='${data.aws_ssm_parameter.rds_password.value}' /usr/pgsql-16/bin/psql  'host=${aws_db_instance.main.address} port=5432 dbname=default_dummy user=${data.aws_ssm_parameter.rds_username.value} sslmode=verify-full sslrootcert=./global-bundle.pem' <${path.module}/setup.sql
 EOF
   }
 }
